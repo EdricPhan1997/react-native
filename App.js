@@ -4,7 +4,7 @@ import { StyleSheet, Text, View } from "react-native";
 import { NavigationContainer } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import HomeScreen from "./screens/HomeScreen";
-import Learn from "./screens/Learn/Learn"
+import { RenderArray, LearnTextImputAndKeyboard } from "./screens/Learn";
 
 const Stack = createNativeStackNavigator();
 
@@ -12,7 +12,7 @@ const App = () => {
   return (
     <NavigationContainer>
       <Stack.Navigator>
-        <Stack.Screen name="Learn" component={Learn} />
+        <Stack.Screen name="Learn" component={LearnTextImputAndKeyboard} />
       </Stack.Navigator>
     </NavigationContainer>
   );
