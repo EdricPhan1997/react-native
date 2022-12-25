@@ -10,6 +10,7 @@ import {
   TouchableHighlight,
   TouchableWithoutFeedback,
   Pressable,
+  Alert,
 } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 
@@ -17,10 +18,23 @@ const LearnTextImputAndKeyboard = () => {
   const [name, setName] = useState("");
   const [submitted, setSubmitted] = useState(false);
 
-  const hanldeClick = () => {
+  const onPressHandler = () => {
     //
-    setSubmitted(!submitted);
+    if (name.length > 3) {
+      setSubmitted(!submitted);
+    } else {
+      Alert.alert("Warning", "The name must be long than 3 characters", [
+        {
+          text: "Do not show again",
+          onPress: () => console.warn("Dont show again !!"),
+        },
+        { text: "Cancle", onPress: () => console.warn("Cancle Press !!") },
+        { text: "OK", onPress: () => console.warn("Ok Pressed !!") },
+      ]);
+    }
   };
+
+  // learn 1:51p
 
   return (
     <SafeAreaView>
@@ -38,36 +52,36 @@ const LearnTextImputAndKeyboard = () => {
         />
         {/* <Button
           title={submitted ? "Clear" : "submit"}
-          onPress={hanldeClick}
+          onPress={onPressHandler}
           // disabled={submitted}
           color="#00f"
         /> */}
 
-        {/* <TouchableOpacity style={styles.button} onPress={hanldeClick} activeOpacity={0.2}>
+        {/* <TouchableOpacity style={styles.button} onPress={onPressHandler} activeOpacity={0.2}>
           <Text>{submitted ? "Clear" : "submit"}</Text>
         </TouchableOpacity> */}
         {/* <TouchableHighlight
           style={styles.button}
-          onPress={hanldeClick}
+          onPress={onPressHandler}
           underlayColor="#dddd"
         >
           <Text>{submitted ? "Clear" : "submit"}</Text>
         </TouchableHighlight> */}
 
-        {/* <TouchableWithoutFeedback onPress={hanldeClick}>
+        {/* <TouchableWithoutFeedback onPress={onPressHandler}>
           <View style={styles.button}>
             <Text>{submitted ? "Clear" : "submit"}</Text>
           </View>
         </TouchableWithoutFeedback> */}
         <Pressable
           // click lau lau
-          // onLongPress={hanldeClick}
+          // onLongPress={onPressHandler}
           // delayLongPress={2000}
           style={({ pressed }) => [
             { backgroundColor: pressed ? "#dddd" : "#00ff00" },
             styles.button,
           ]}
-          onPress={hanldeClick}
+          onPress={onPressHandler}
           // Click xung quanh voi pham vi tuy chinh
           hitSlop={{ top: 10, bottom: 10, left: 10, right: 10 }}
           android_ripple={{ color: "#00f" }}
