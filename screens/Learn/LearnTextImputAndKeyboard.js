@@ -11,26 +11,34 @@ import {
   TouchableWithoutFeedback,
   Pressable,
   Alert,
+  Modal,
 } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 
 const LearnTextImputAndKeyboard = () => {
   const [name, setName] = useState("");
   const [submitted, setSubmitted] = useState(false);
+  const [showWarning, setShowWarning] = useState(false);
 
   const onPressHandler = () => {
     //
     if (name.length > 3) {
       setSubmitted(!submitted);
     } else {
-      Alert.alert("Warning", "The name must be long than 3 characters", [
-        {
-          text: "Do not show again",
-          onPress: () => console.warn("Dont show again !!"),
-        },
-        { text: "Cancle", onPress: () => console.warn("Cancle Press !!") },
-        { text: "OK", onPress: () => console.warn("Ok Pressed !!") },
-      ]);
+      setShowWarning(true);
+      // Alert.alert(
+      //   "Warning",
+      //   "The name must be long than 3 characters",
+      //   [
+      //     {
+      //       text: "Do not show again",
+      //       onPress: () => console.warn("Dont show again !!"),
+      //     },
+      //     { text: "Cancle", onPress: () => console.warn("Cancle Press !!") },
+      //     { text: "OK", onPress: () => console.warn("Ok Pressed !!") },
+      //   ],
+      //   { cancelable: true, onDismiss: () => console.warn("Alert dismissed") }
+      // );
     }
   };
 
@@ -38,6 +46,37 @@ const LearnTextImputAndKeyboard = () => {
 
   return (
     <SafeAreaView>
+      <Modal
+        transparent
+        visible={showWarning}
+        onRequestClose={() => {
+          setShowWarning(false);
+        }}
+        // animationType="fade"
+        animationType="slide"
+        hardwareAccelerated
+      >
+        <View style={styles.center_view}>
+          <View style={styles.warning_modal}>
+            <View style={styles.warning_title}>
+              <Text style={styles.text}>Warning !!</Text>
+            </View>
+            <View style={styles.warning_body}>
+              <Text style={styles.text}>
+                The name must be long than 3 characters
+              </Text>
+            </View>
+
+            <Pressable
+              style={styles.warning_button}
+              onPress={() => setShowWarning(false)}
+              android_ripple={{ color: "#fff" }}
+            >
+              <Text style={styles.text}>OK</Text>
+            </Pressable>
+          </View>
+        </View>
+      </Modal>
       <View style={styles.view1}>
         <Text style={styles.text}>Please write your name !!!</Text>
         <TextInput
@@ -139,6 +178,7 @@ const styles = StyleSheet.create({
     fontSize: 24,
     color: "#000",
     marginTop: 10,
+    textAlign: "center",
   },
   full: {
     width: "100%",
@@ -156,5 +196,37 @@ const styles = StyleSheet.create({
   button: {
     // backgroundColor: "#00ff00",
     padding: 8,
+  },
+  warning_modal: {
+    width: 300,
+    height: 300,
+    backgroundColor: "#fff",
+    borderWidth: 1,
+    borderColor: "#000",
+    borderRadius: 10,
+  },
+  center_view: {
+    alignItems: "center",
+    flex: 1,
+    justifyContent: "center",
+    backgroundColor: "#00000099",
+  },
+  warning_title: {
+    height: 50,
+    justifyContent: "center",
+    alignItems: "center",
+    backgroundColor: "#ff0",
+    borderTopRightRadius: 10,
+    borderTopLeftRadius: 10,
+  },
+  warning_body: {
+    height: 200,
+    justifyContent: "center",
+    alignItems: "center",
+  },
+  warning_button: {
+    backgroundColor: "#00ffff",
+    borderBottomRightRadius: 10,
+    borderBottomLeftRadius: 10,
   },
 });
